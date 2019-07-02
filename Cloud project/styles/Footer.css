@@ -1,0 +1,110 @@
+/* footer */
+#mainWrapper footer {
+	clear: both;
+	overflow: auto;
+	background-color: rgb(0 ,31 , 63);
+	font-family: source-sans-pro, sans-serif;
+	font-style: normal;
+	font-weight: 200;
+	line-height: 1.8;
+	padding-top: 16px;
+	padding-left: 10px;
+	text-align: center;
+	padding-bottom: 22px;
+	padding-right: 10px;
+} 
+
+
+/*Each footer content */
+#mainWrapper footer div {
+	width: 27%;
+	float: right;
+	padding-left: 4%;
+	padding-right: 2%;
+	color: rgba(255,255,255,1.00);
+	text-align: justify;
+}
+/* Links in footer */
+footer div a {
+	color: rgba(146,146,146,1.00);
+	display: block;
+	text-decoration: none;
+	text-align: center;
+}
+/* Container for links in footer */
+footer .footerlinks {
+	margin-top: 0px;
+	font-weight: bold;
+
+}
+
+
+
+@media screen and (max-width:700px) {
+    /* Container for links in footer */
+#mainWrapper footer .footerlinks {
+	float: none;
+	width: 100%;
+	position: relative;
+	top: 17px;
+	clear: both;
+	text-align: center;
+	left: 0%;
+	padding-bottom: 19px;
+}
+
+/* Container for each footer divisions */
+#mainWrapper footer div {
+	width: 44%;
+	text-align: justify;
+	font-size: 15px;
+}
+
+
+/* Links in footer */
+.footerlinks p a {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	display: inline;
+	padding-right: 35px;
+}
+/* Footer region */
+#mainWrapper footer {
+	padding-left: 16px;
+	overflow: hidden;
+}
+
+/* Paragraphs in footer */
+footer .footerlinks p {
+	display: inline;
+}
+
+@media screen and (max-width:480px) {
+	#mainWrapper footer {
+		
+		line-height: 1.5;
+		padding-top: 12px;
+		padding-left: 12px;
+		text-align: center;
+		padding-bottom: 22px;
+		padding-right: 12px;
+	} 
+	
+    #mainWrapper footer div {
+		width: 100%;
+        text-align: center;
+		padding-bottom: 16px;
+        overflow: auto;
+    }
+
+    /* Container for links in footer */
+#mainWrapper footer .footerlinks {
+	padding-left: 8%;
+}
+
+
+}
+
+
+}
+

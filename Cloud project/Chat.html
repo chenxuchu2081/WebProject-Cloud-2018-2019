@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>chat</title>
+
+	<link href="styles/chat.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://npmcdn.com/parse@2.1.0/dist/parse.min.js"></script>
+
+	<script type="text/javascript">
+
+		function openForm() {
+			document.getElementById("chatForm").style.display = "block";
+		}
+
+		function closeForm() {
+			document.getElementById("chatForm").style.display = "none";
+		}
+
+	</script>
+</head>
+
+<body>
+	<div id="navbar">
+		<div id="navbar-right">
+			<a href="index.php">Home</a>
+			<a class="active" href="Chat.html">Community</a>
+		</div>
+	</div>
+
+	<div style="font-weight: bold;  margin-top: 40px; text-align: right" >
+		<h1>IVE Star Comment area</h1>
+		<p>Exchange of opinions about products</p>
+	</div>
+
+
+
+
+	<!-- <div class="container">
+  <img src="images/travel-product2.jpg" id="rightImage" style="width:100%;">
+  <p id="right_message">Hello. How are you today?</p>
+  <span class="time-right">11:00</span>
+</div>
+
+<div class="container darker">
+  <img src="images/travel-product2.jpg" id="leftImage" class="right" style="width:100%;">
+  <p id="left_message">Hey! I'm fine. Thanks for asking!</p>
+  <span class="time-left">11:01</span>
+</div>  -->
+
+	<div id="container" class="container" id="leftImage" class="left" style="width:100%;"></div>
+
+	<button class="open-button" onclick="openForm()">Chat</button>
+
+	<div class="chat-popup" id="chatForm">
+		<div class="form-container">
+			<div style="text-align: center">
+				<h1>ChatBox</h1>
+			</div>
+			<!--<label for="msg"><b>Message</b></label>-->
+			<input type="file" name="pic" accept="image/*" id="ProductImage" style="margin-bottom: 15px">
+
+			<textarea id="messages" placeholder="Type message.." name="msg" required></textarea>
+
+			<input type="submit" value="Send" class="btn" onclick="UpComments()">
+			<input type="button" value="Close" class="btn cancel" onclick="closeForm()">
+		</div>
+	</div>
+
+	<script>
+		$(document).ready(
+			readData()
+		);//end ready
+
+		function readData() {
+			var URL = "https://parseapi.back4app.com/classes/Comments";
+			var clearComment = $('#container');
+			clearComment.html("");
+			$.ajax({
+				method: 'GET',
+				url: URL,
+				headers: {
+					"X-Parse-Application-Id": "id6lNbpo6h0MJQNN1xsdY6EHfzCXrluly3GTzDax",
+					"X-Parse-REST-API-Key": "v0jj9vDpEKpIBJWiIAJOXlbsEEokz3FtWWFS1T5l"
+				},
+				success: function (data) {
+					for (var i = 0; i < data.results.length; i++) {
+						/*$('<div></div>').addClass("ChatContainers").appendTo("#test");
+						$("<img/>").attr("src",data.results[i].image.url).addClass("container_img").appendTo("#test");
+						$("<p>" + data.results[i].message + "</p>").appendTo("#test");
+						$("<span>" + data.results[i].createdAt + "</span>").addClass("time-right").appendTo("#test");
+						*/
+						$('<div>').addClass("container").appendTo("#container");
+						$("<img/>").attr("src", data.results[i].image.url).addClass("container_img").appendTo("#container");
+						$("<p>" + data.results[i].message + "</p>").appendTo("#container");
+						$("<span>" + data.results[i].createdAt + "</span>").addClass("time-right").appendTo("#container");
+						$('</div>').appendTo("#container");
+					}
+
+					setTimeout(readData, 10000);
+				},
+				timeout: 10000,
+				error: function () {
+					alert("Load Data Failed!");
+				}
+			});
+
+
+
+
+		}
+
+		function UpComments() {
+			var APP_ID = "id6lNbpo6h0MJQNN1xsdY6EHfzCXrluly3GTzDax";
+			var JS_KEY = "56q4YjR10vQ0U9gwmtYdpwJyXOsr91rBQkteohK9";
+			var message = document.getElementById("messages").value;
+
+			//var imageName = document.getElementById("ProductImage").value;
+			var image = $("#ProductImage")[0];
+
+			Parse.initialize(APP_ID, JS_KEY); //PASTE HERE YOUR Back4App APPLICATION ID AND YOUR JavaScript KEY
+			Parse.serverURL = "https://parseapi.back4app.com/";
+
+			const Comments = Parse.Object.extend('Comments');
+			const myNewObject = new Comments();
+			myNewObject.set('message', message);
+			if (image.files.length > 0) {
+				var file = image.files[0];
+				var name = "photo.jpg";
+
+				var parseFile = new Parse.File(name, file);
+				myNewObject.set('image', parseFile);
+			}
+			myNewObject.save().then(
+				(result) => {
+					if (typeof document !== 'undefined') alert(`Comments sent!`);
+					console.log('Comments created', result);
+				},
+				(error) => {
+					if (typeof document !== 'undefined') alert(`Error while creating Comments: ${JSON.stringify(error)}`);
+					console.error('Error while creating Comments: ', error);
+				}
+			);
+
+		}
+
+
+	</script>
+
+</body>
+
+</html>
